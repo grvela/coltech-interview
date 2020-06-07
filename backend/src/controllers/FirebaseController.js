@@ -4,22 +4,27 @@ const database = domain.ref("users/");
 
 function DatabaseController(){
 
-    this.getData = (callback) =>{
+    this.getData = (callback) => {
         database.once('value') 
-        .then((snapshot) => {    
-            callback(snapshot.val());
+        .then((snapshot) => {
+            if(snapshot.val() != null){
+                callback(snapshot.val());
+            }else{
+                callback({});
+            } 
         });
     }
 
     this.setData = (object) => {
+
         let {title, url, techs} = object;
-        const hash = database.push({
-        title: title,
-        url: url,
-        techs: techs,
-        likes: 0
+        const id = database.push({
+            title,
+            url,
+            techs,
+            likes: 0
         }).key;
-        return hash;
+        return id;
     }
 
     this.editData = (object) => {

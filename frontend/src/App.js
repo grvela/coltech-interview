@@ -10,7 +10,7 @@ import './App.css'
 
 function App(){
 
-  const [repositories, setRepositories] = useState([]);
+  const [repositories, setRepositories] = useState({});
 
   useEffect(() => {
     async function loadRepositories(){
@@ -18,13 +18,13 @@ function App(){
       setRepositories(response.data);
     }
     loadRepositories();
-  }, []);
+  }, [repositories]);
 
-  async function HandleAddRepositorie(data){
+  async function handleAddSubmit(data){
     await api.post('repositories', data)
   }
 
-  async function HandleDeleteRepositorie(id){
+  async function handleDelete(id){
     await api.delete('repositories', {data: id})
   }
 
@@ -32,17 +32,17 @@ function App(){
     <div className="container">
       <main className="dashboard">
         <header className="FormBox">
-          <Forms onSubmit={HandleAddRepositorie}/> 
+          <Forms onSubmit={handleAddSubmit}/> 
         </header>
         <main className="CardBox">
           <ListGroup>
           {
-             Object.keys(repositories).map((key, index) => (
+            Object.keys(repositories).map((key, index) => (
               <Cards 
-              onClick={HandleDeleteRepositorie}
               key={index}
               data={repositories[key]}
               id={key}
+              onClick={handleDelete}
               />
             ))            
           }
