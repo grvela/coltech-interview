@@ -5,23 +5,24 @@ import api from '../../Services/Api';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Forms({onSubmit}){
+function Forms(){
     const [title, setTitle] = useState('');
     const [url, setUrl] = useState('');
     const [techs, setTechs] = useState('');
 
+   
     async function handleSubmit(event){
         event.preventDefault()
-        await onSubmit({
+        await api.post('repositories', {
             title,
             url,
-            techs,
-        });
+            techs
+        })
         setTitle('')
         setUrl('')
         setTechs('')
     }
-
+    
     return (
         <Form onSubmit={handleSubmit}>
             <Row>

@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {ListGroup,Button, Row, Col} from 'react-bootstrap';
+import {AiFillHeart} from 'react-icons/ai';
 
 import api from '../../Services/Api';
 
 import './Card.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Cards({data, id, onClick}){
+function Cards({data, id}){
     
     async function handleDelete(){
-        await onClick({id});
+        await api.delete('repositories', {data: {id}})
     }
 
     async function handleStar(){
@@ -20,14 +21,14 @@ function Cards({data, id, onClick}){
         <ListGroup.Item>
             <Row>
               
-              <Button onClick={handleStar} variant="outline-success">star</Button>
+              <Button onClick={handleStar}variant="outline-success"> <AiFillHeart/> </Button>
 
                 <Col xs={10} className="bordered-list">
                     <Row>
                         <Col>{data.title}</Col>
                         <Col>{data.techs}</Col>
                         <Col>{data.url}</Col>
-                        <Col>{data.likes}</Col>
+                        <Col xs={1}>{data.likes}</Col>
                     </Row>
                 </Col>
               

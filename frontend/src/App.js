@@ -20,19 +20,12 @@ function App(){
     loadRepositories();
   }, [repositories]);
 
-  async function handleAddSubmit(data){
-    await api.post('repositories', data)
-  }
-
-  async function handleDelete(id){
-    await api.delete('repositories', {data: id})
-  }
 
   return (
     <div className="container">
       <main className="dashboard">
         <header className="FormBox">
-          <Forms onSubmit={handleAddSubmit}/> 
+          <Forms/> 
         </header>
         <main className="CardBox">
           <ListGroup>
@@ -42,7 +35,6 @@ function App(){
               key={index}
               data={repositories[key]}
               id={key}
-              onClick={handleDelete}
               />
             ))            
           }
